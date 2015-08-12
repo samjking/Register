@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Register</string>
 
-    <string name="hello_world">Hello world!</string>
+    <string name="mark_absent">0</string>
+    <string name="mark_present">/</string>
+    <string name="mark_menu">-</string>
     <string name="action_settings">Settings</string>
 </resources>
