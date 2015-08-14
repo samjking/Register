@@ -30,7 +30,7 @@
     </HorizontalScrollView>
 
     <LinearLayout android:orientation="horizontal"
-        android:layout_height="100dp"
+        android:layout_height="80dp"
         android:layout_width="match_parent"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
@@ -38,34 +38,30 @@
         android:background="@color/button_material_dark"
         android:padding="0dp"
         >
-        <Button
+        <ImageButton
             android:layout_height="match_parent"
-            android:text="@string/mark_absent"
             android:id="@+id/button_absent"
             android:layout_width="0dp"
             android:layout_weight="0.3"
             android:layout_marginRight="20dp"
-            android:textSize="40sp"
+            android:src="@drawable/ic_close_white_48dp"/>
             />
 
-        <Button
+        <ImageButton
             android:layout_width="0dp"
             android:layout_weight="0.2"
             android:layout_height="match_parent"
-            android:text="@string/mark_menu"
             android:id="@+id/button"
-            android:textSize="40sp"
+            android:src="@drawable/ic_more_vert_white_48dp"
             />
 
-        <Button
+        <ImageButton
             android:layout_marginLeft="20dp"
             android:layout_width="0dp"
             android:layout_weight="0.3"
             android:layout_height="match_parent"
-            android:text="@string/mark_present"
             android:id="@+id/button_present"
-            android:textSize="40sp"
-             />
+            android:src="@drawable/ic_check_white_48dp"/>
 
 
     </LinearLayout>
