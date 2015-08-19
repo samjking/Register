@@ -4,17 +4,21 @@ import android.content.res.TypedArray;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+// http://stackoverflow.com/questions/2595063/android-horizontal-scrollview-behave-like-iphone-paging
+// http://www.velir.com/blog/index.php/2010/11/17/android-snapping-horizontal-scroll/
 
 public class MainActivity extends AppCompatActivity {
 
     /**
      * Define the number of items visible when the carousel is first shown.
      */
-    private static final float INITIAL_ITEMS_COUNT = 1.5F;
+    private static final float INITIAL_ITEMS_COUNT = 1.8F;
 
     private LinearLayout mCarouselContainer;
 
@@ -29,9 +33,12 @@ public class MainActivity extends AppCompatActivity {
         final DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         final int imageWidth = (int) (displayMetrics.widthPixels / INITIAL_ITEMS_COUNT);
+        final int imageMargin = (int)Math.floor(imageWidth / 10);
+        final int edgeMargin = (displayMetrics.widthPixels - imageWidth - 2*imageMargin)/2;
 
         final TypedArray photoResourcesTypedArray = getResources().obtainTypedArray(R.array.photo_array);
 
+        mCarouselContainer.setPadding(edgeMargin,0,edgeMargin,0);
 
         // Populate the carousel with items
         ImageView imageItem;
@@ -39,14 +46,20 @@ public class MainActivity extends AppCompatActivity {
             // Create new ImageView
             imageItem = new ImageView(this);
 
+            imageItem.setBackgroundColor(0xFF00FF00);
+
             // Set the shadow background
             //imageItem.setBackgroundResource(R.drawable.shadow);
 
             // Set the image view resource
             imageItem.setImageResource(photoResourcesTypedArray.getResourceId(i, -1));
 
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(imageWidth,(int)Math.floor(imageWidth*1.3));
+
+            lp.setMargins(imageMargin,0,imageMargin,0);
+
             // Set the size of the image view to the previously computed value
-            imageItem.setLayoutParams(new LinearLayout.LayoutParams(imageWidth, imageWidth));
+            imageItem.setLayoutParams(lp);
 
             /// Add image view to the carousel container
              mCarouselContainer.addView(imageItem);

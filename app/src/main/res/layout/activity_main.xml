@@ -8,15 +8,22 @@
 
     <HorizontalScrollView android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scrollbars="none">
+        android:scrollbars="none"
+        android:layout_marginLeft="0dp"
+        android:paddingLeft="0dp"
+        >
 
         <!-- Carousel items container - lays out items horizontally -->
         <LinearLayout android:id="@+id/carousel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="160dp"
-            android:paddingRight="160dp"
-            android:orientation="horizontal"/>
+            android:orientation="horizontal"
+            android:layout_marginLeft="0dp"
+            android:paddingLeft="0dp"
+            android:background="@color/material_blue_grey_800"
+            />
+        <!-- android:paddingLeft="160dp"
+            android:paddingRight="160dp" -->
 
     </HorizontalScrollView>
 
