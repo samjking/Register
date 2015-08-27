@@ -1,6 +1,8 @@
 package uk.co.samjking.register;
 
 import android.content.res.TypedArray;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -10,10 +12,13 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-// http://stackoverflow.com/questions/2595063/android-horizontal-scrollview-behave-like-iphone-paging
-// http://www.velir.com/blog/index.php/2010/11/17/android-snapping-horizontal-scroll/
+// http://codetheory.in/android-image-slideshow-using-viewpager-pageradapter/
+// http://developer.android.com/training/displaying-bitmaps/index.html
 
 public class MainActivity extends AppCompatActivity {
+
+    PhotoContainer mContainer;
+
 
     /**
      * Define the number of items visible when the carousel is first shown.
@@ -27,6 +32,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mContainer = (PhotoContainer) findViewById(R.id.photo_container);
+
+        ViewPager pager = mContainer.getViewPager();
+        PagerAdapter adapter = new PhotoPageAdapter(this);
+        pager.setAdapter(adapter);
+        //Necessary or the pager will only have one extra page to show
+        // make this at least however many pages you can see
+        pager.setOffscreenPageLimit(adapter.getCount());
+        //A little space between pages
+        pager.setPageMargin(15);
+
+        //If hardware acceleration is enabled, you should also remove
+        // clipping on the pager for its children.
+        pager.setClipChildren(false);
+
+        //ViewPager vp = new ViewPager(this);
+        //setContentView(vp);
+
+        /*
         mCarouselContainer = (LinearLayout) findViewById(R.id.carousel);
 
         // Compute the width of a carousel item based on the screen width and number of initial items.
@@ -63,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
 
             /// Add image view to the carousel container
              mCarouselContainer.addView(imageItem);
-        }
+        }*/
 
     }
 
@@ -89,3 +113,47 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 }
+
+/*
+public class ImageDetailActivity extends FragmentActivity {
+    public static final String EXTRA_IMAGE = "extra_image";
+
+    private ImagePagerAdapter mAdapter;
+    private ViewPager mPager;
+
+    // A static dataset to back the ViewPager adapter
+    public final static Integer[] imageResIds = new Integer[] {
+            R.drawable.sample_image_1, R.drawable.sample_image_2, R.drawable.sample_image_3,
+            R.drawable.sample_image_4, R.drawable.sample_image_5, R.drawable.sample_image_6,
+            R.drawable.sample_image_7, R.drawable.sample_image_8, R.drawable.sample_image_9};
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.image_detail_pager); // Contains just a ViewPager
+
+        mAdapter = new ImagePagerAdapter(getSupportFragmentManager(), imageResIds.length);
+        mPager = (ViewPager) findViewById(R.id.pager);
+        mPager.setAdapter(mAdapter);
+    }
+
+    public static class ImagePagerAdapter extends FragmentStatePagerAdapter {
+        private final int mSize;
+
+        public ImagePagerAdapter(FragmentManager fm, int size) {
+            super(fm);
+            mSize = size;
+        }
+
+        @Override
+        public int getCount() {
+            return mSize;
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return ImageDetailFragment.newInstance(position);
+        }
+    }
+}
+ */
