@@ -16,30 +16,17 @@ public class PhotoPageAdapter extends PagerAdapter {
 
     Context context;
 
-    int[] photos = {
-            R.drawable.p0557033761,
-            R.drawable.p0557033766,
-            R.drawable.p0557033771,
-            R.drawable.p0557033776,
-            R.drawable.p0557033781,
-            R.drawable.p0557033786,
-            R.drawable.p0557033816,
-    };
+    int[] photos;
 
-    public PhotoPageAdapter(Context context) {
+    public PhotoPageAdapter(Context context,int[] data) {
         this.context = context;
+        photos = data;
     }
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         ImageView imageItem = new ImageView(context);
         imageItem.setImageResource(photos[position]);
-
-        /*TextView view = new TextView(context);
-        view.setText("Item "+position);
-        view.setGravity(Gravity.CENTER);
-        view.setBackgroundColor(Color.argb(255, position * 50, position * 10, position * 50));
-        */
 
         container.addView(imageItem);
         return imageItem;
