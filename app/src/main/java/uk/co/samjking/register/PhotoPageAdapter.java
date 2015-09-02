@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import 	android.content.Context;
 
+import java.util.ArrayList;
+
 /**
  * Created by sam_000 on 24/08/2015.
  */
@@ -16,30 +18,42 @@ public class PhotoPageAdapter extends PagerAdapter {
 
     Context context;
 
-    int[] photos;
+    ArrayList<String[]> data;
 
-    public PhotoPageAdapter(Context context,int[] data) {
+    public PhotoPageAdapter(Context context) {
         this.context = context;
-        photos = data;
     }
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        ImageView imageItem = new ImageView(context);
-        imageItem.setImageResource(photos[position]);
+        String[] person = data.get(position);
 
+
+
+        ImageView imageItem = new ImageView(context);
+        int photo = context.getResources().getIdentifier(person[2],"drawable",context.getPackageName());
+        imageItem.setImageResource(photo);
         container.addView(imageItem);
+
+        TextView nameItem = new TextView(context);
+        nameItem.setText("Hello");
+        container.addView(nameItem);
+
         return imageItem;
     }
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        container.removeView((View)object);
+        container.removeView((View) object);
     }
 
     @Override
     public int getCount() {
-        return photos.length;
+        return data.size();
+    }
+
+    public void setData(ArrayList<String[]> data) {
+        this.data=data;
     }
 
     @Override

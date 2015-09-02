@@ -4,25 +4,24 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
     PhotoContainer mContainer;
 
     ViewPager pager;
-
-    int[] photos = {
-            R.drawable.p0557033761,
-            R.drawable.p0557033766,
-            R.drawable.p0557033771,
-            R.drawable.p0557033776,
-            R.drawable.p0557033781,
-            R.drawable.p0557033786,
-            R.drawable.p0557033816,
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +31,12 @@ public class MainActivity extends AppCompatActivity {
         mContainer = (PhotoContainer) findViewById(R.id.photo_container);
 
         pager = mContainer.getViewPager();
-        PagerAdapter adapter = new PhotoPageAdapter(this,photos);
+
+        ArrayList data = readJSON();
+
+        PhotoPageAdapter adapter = new PhotoPageAdapter(this);
+        adapter.setData(data);
+
         pager.setAdapter(adapter);
         //Necessary or the pager will only have one extra page to show
         // make this at least however many pages you can see
@@ -44,6 +48,47 @@ public class MainActivity extends AppCompatActivity {
         // clipping on the pager for its children.
         pager.setClipChildren(false);
 
+    }
+
+    protected ArrayList<String[]> readJSON() {
+        InputStream inputStream = getResources().openRawResource(R.raw.register1234);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        ArrayList<String[]> data = new ArrayList<String[]>();
+
+        int ctr;
+        try {
+            ctr = inputStream.read();
+            while (ctr != -1) {
+                byteArrayOutputStream.write(ctr);
+                ctr = inputStream.read();
+            }
+            inputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Log.v("SJK", byteArrayOutputStream.toString());
+        try {
+            // Parse the data into jsonobject to get original data in form of json.
+            JSONObject jObject = new JSONObject(
+                    byteArrayOutputStream.toString());
+
+            JSONArray students= jObject.getJSONArray("students");
+
+            String id;
+            String name;
+            String photo;
+            for (int i = 0; i < students.length(); i++) {
+                id = students.getJSONObject(i).getString("id");
+                name = students.getJSONObject(i).getString("name");
+                photo = students.getJSONObject(i).getString("photo");
+                Log.v("ID", id);
+                Log.v("Name", name);
+                data.add(new String[] { id, name, photo });
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return data;
     }
 
     @Override
@@ -66,10 +111,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public int[] getPhotos() {
-        return photos;
     }
 
     public void markAbsent(View view) {
