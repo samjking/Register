@@ -6,6 +6,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import 	android.content.Context;
 
@@ -28,18 +29,34 @@ public class PhotoPageAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         String[] person = data.get(position);
 
+        LinearLayout layout = new LinearLayout(context);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        layout.setOrientation(LinearLayout.VERTICAL);
+        //params.gravity=Gravity.CENTER_HORIZONTAL;
+        layout.setLayoutParams(params);
+        //layout.setGravity(Gravity.CENTER_HORIZONTAL);
 
-
-        ImageView imageItem = new ImageView(context);
-        int photo = context.getResources().getIdentifier(person[2],"drawable",context.getPackageName());
-        imageItem.setImageResource(photo);
-        container.addView(imageItem);
+        //layout.setBackgroundColor(Color.GREEN);
 
         TextView nameItem = new TextView(context);
-        nameItem.setText("Hello");
-        container.addView(nameItem);
+        nameItem.setText(person[1]);
+        layout.addView(nameItem);
 
-        return imageItem;
+        ImageView imageItem = new ImageView(context);
+        int photo = context.getResources().getIdentifier(person[2], "drawable", context.getPackageName());
+        imageItem.setImageResource(photo);
+
+        /*
+        ViewGroup.LayoutParams layoutParams = imageItem.getLayoutParams();
+        layoutParams.width = 80;
+        layoutParams.height = 80;
+        imageItem.setLayoutParams(layoutParams);
+        */
+        layout.addView(imageItem);
+
+        container.addView(layout);
+
+        return layout;
     }
 
     @Override
