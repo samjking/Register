@@ -1,5 +1,6 @@
 package uk.co.samjking.register;
 
+import android.content.res.TypedArray;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -47,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
         //If hardware acceleration is enabled, you should also remove
         // clipping on the pager for its children.
         pager.setClipChildren(false);
+
+
 
     }
 

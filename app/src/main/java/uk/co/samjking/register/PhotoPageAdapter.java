@@ -1,7 +1,9 @@
 package uk.co.samjking.register;
 
+import android.app.ActionBar;
 import android.graphics.Color;
 import android.support.v4.view.PagerAdapter;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,21 +40,27 @@ public class PhotoPageAdapter extends PagerAdapter {
 
         //layout.setBackgroundColor(Color.GREEN);
 
+
+
         TextView nameItem = new TextView(context);
         nameItem.setText(person[1]);
         layout.addView(nameItem);
+        nameItem.setGravity(Gravity.CENTER);
 
         ImageView imageItem = new ImageView(context);
         int photo = context.getResources().getIdentifier(person[2], "drawable", context.getPackageName());
         imageItem.setImageResource(photo);
-
-        /*
-        ViewGroup.LayoutParams layoutParams = imageItem.getLayoutParams();
-        layoutParams.width = 80;
-        layoutParams.height = 80;
-        imageItem.setLayoutParams(layoutParams);
-        */
         layout.addView(imageItem);
+
+        ImageView box = new ImageView(context);
+        box.setImageResource(R.drawable.ic_crop_square_white_36dp);
+        layout.addView(box);
+
+        ViewGroup.LayoutParams layoutParams = imageItem.getLayoutParams();
+        layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+        layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
+        //Log.d("SJK",String.valueOf(ViewGroup.LayoutParams.MATCH_PARENT));
+        imageItem.setLayoutParams(layoutParams);
 
         container.addView(layout);
 
