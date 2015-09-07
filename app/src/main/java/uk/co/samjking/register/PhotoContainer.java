@@ -7,8 +7,9 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
-public class PhotoContainer extends FrameLayout implements ViewPager.OnPageChangeListener {
+public class PhotoContainer extends LinearLayout implements ViewPager.OnPageChangeListener {
 
     private ViewPager mPager;
     boolean mNeedsRedraw = false;

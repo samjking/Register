@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected ArrayList<String[]> readJSON() {
-        InputStream inputStream = getResources().openRawResource(R.raw.register1234);
+        InputStream inputStream = getResources().openRawResource(R.raw.register1117849);
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         ArrayList<String[]> data = new ArrayList<String[]>();
 
@@ -83,9 +83,9 @@ public class MainActivity extends AppCompatActivity {
             for (int i = 0; i < students.length(); i++) {
                 id = students.getJSONObject(i).getString("id");
                 name = students.getJSONObject(i).getString("name");
-                photo = students.getJSONObject(i).getString("photo");
-                Log.v("ID", id);
-                Log.v("Name", name);
+                photo =  "p" + id.substring(4);
+                Log.v("SJK ID", id);
+                Log.v("SJK Name", name);
                 data.add(new String[] { id, name, photo });
             }
         } catch (Exception e) {
