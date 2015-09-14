@@ -39,13 +39,12 @@ public class PhotoContainer extends LinearLayout implements ViewPager.OnPageChan
         setLayerType(View.LAYER_TYPE_SOFTWARE, null);
     }
 
-
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
         try {
             mPager = (ViewPager) getChildAt(0);
-            mPager.setOnPageChangeListener(this);
+            mPager.addOnPageChangeListener(this);
         } catch (Exception e) {
             throw new IllegalStateException("The root child of PagerContainer must be a ViewPager");
         }

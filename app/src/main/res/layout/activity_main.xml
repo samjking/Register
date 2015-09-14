@@ -96,7 +96,9 @@
         android:layout_above="@id/button_bar"
         android:layout_gravity="center_vertical">
         <android.support.v4.view.ViewPager
-            android:layout_width="260dp"
+            android:layout_marginStart="80dp"
+            android:layout_marginEnd="80dp"
+            android:layout_width="match_parent"
             android:layout_height="fill_parent"
             android:layout_gravity="center_horizontal" />
     </uk.co.samjking.register.PhotoContainer>

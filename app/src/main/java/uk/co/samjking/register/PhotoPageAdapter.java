@@ -38,10 +38,10 @@ public class PhotoPageAdapter extends PagerAdapter {
         layout.setLayoutParams(params);
         //layout.setGravity(Gravity.CENTER_HORIZONTAL);
 
-        //layout.setBackgroundColor(Color.GREEN);
+        layout.setBackgroundColor(Color.GREEN);
 
 
-
+//260dp
         TextView nameItem = new TextView(context);
         nameItem.setText(person[1]);
         layout.addView(nameItem);
@@ -64,7 +64,14 @@ public class PhotoPageAdapter extends PagerAdapter {
 
         container.addView(layout);
 
+
+
         return layout;
+    }
+
+    @Override
+    public float getPageWidth(int page) {
+        return 0.65f;
     }
 
     @Override

@@ -1,11 +1,13 @@
 package uk.co.samjking.register;
 
 import android.content.res.TypedArray;
+import android.graphics.Point;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -42,8 +44,14 @@ public class MainActivity extends AppCompatActivity {
         //Necessary or the pager will only have one extra page to show
         // make this at least however many pages you can see
         pager.setOffscreenPageLimit(adapter.getCount());
-        //A little space between pages
-        pager.setPageMargin(15);
+
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+
+        // Set the margins between pages to 15%
+        float margin = size.x * 0.15f;
+        pager.setPageMargin(Math.round(margin));
 
         //If hardware acceleration is enabled, you should also remove
         // clipping on the pager for its children.
