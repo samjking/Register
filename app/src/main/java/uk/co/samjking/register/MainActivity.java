@@ -1,6 +1,7 @@
 package uk.co.samjking.register;
 
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -11,6 +12,8 @@ import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -20,6 +23,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
+
+// Head count
 public class MainActivity extends AppCompatActivity {
 
     PhotoContainer mContainer;
@@ -48,9 +53,11 @@ public class MainActivity extends AppCompatActivity {
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
+        Log.d("SJK window", String.valueOf(size.x));
 
         // Set the margins between pages to 15%
         float margin = size.x * 0.15f;
+        Log.d("SJK margin",String.valueOf(Math.round(margin)));
         pager.setPageMargin(Math.round(margin));
 
         //If hardware acceleration is enabled, you should also remove
@@ -125,14 +132,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void markAbsent(View view) {
+        View v = pager.getChildAt(pager.getCurrentItem());
+        ImageView i = (ImageView)v.findViewWithTag("img");
+        i.setImageResource(R.drawable.ic_close_white_36dp);
+
         moveForward();
+        //Toast.makeText(MainActivity.this,R.string.saved,Toast.LENGTH_SHORT).show();
     }
 
     public void markPresent(View view) {
+        View v = pager.getChildAt(pager.getCurrentItem());
+        ImageView i = (ImageView)v.findViewWithTag("img");
+        i.setImageResource(R.drawable.ic_check_white_36dp);
         moveForward();
     }
 
     protected void moveForward() {
+
         pager.setCurrentItem(pager.getCurrentItem()+1, true);
     }
 }

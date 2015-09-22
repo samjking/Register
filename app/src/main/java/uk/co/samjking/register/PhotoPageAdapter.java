@@ -36,29 +36,32 @@ public class PhotoPageAdapter extends PagerAdapter {
         layout.setOrientation(LinearLayout.VERTICAL);
         //params.gravity=Gravity.CENTER_HORIZONTAL;
         layout.setLayoutParams(params);
-        //layout.setGravity(Gravity.CENTER_HORIZONTAL);
+        layout.setGravity(Gravity.CENTER_VERTICAL);
 
-        layout.setBackgroundColor(Color.GREEN);
+        //layout.setBackgroundColor(Color.GREEN);
 
 
 //260dp
-        TextView nameItem = new TextView(context);
-        nameItem.setText(person[1]);
-        layout.addView(nameItem);
-        nameItem.setGravity(Gravity.CENTER);
-
         ImageView imageItem = new ImageView(context);
         int photo = context.getResources().getIdentifier(person[2], "drawable", context.getPackageName());
         imageItem.setImageResource(photo);
+        //imageItem.setBackgroundColor(Color.RED);
         layout.addView(imageItem);
+
+        TextView nameItem = new TextView(context);
+        nameItem.setText(person[1]);
+        nameItem.setPadding(0,50,0,50);
+        layout.addView(nameItem);
+        nameItem.setGravity(Gravity.CENTER);
 
         ImageView box = new ImageView(context);
         box.setImageResource(R.drawable.ic_crop_square_white_36dp);
+        box.setTag("img");
         layout.addView(box);
 
         ViewGroup.LayoutParams layoutParams = imageItem.getLayoutParams();
         layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
-        layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
+        layoutParams.height = 700;//ViewGroup.LayoutParams.MATCH_PARENT;
         //Log.d("SJK",String.valueOf(ViewGroup.LayoutParams.MATCH_PARENT));
         imageItem.setLayoutParams(layoutParams);
 
@@ -71,7 +74,7 @@ public class PhotoPageAdapter extends PagerAdapter {
 
     @Override
     public float getPageWidth(int page) {
-        return 0.65f;
+        return 1;//0.65f;
     }
 
     @Override
