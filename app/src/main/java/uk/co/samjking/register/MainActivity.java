@@ -81,10 +81,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    protected ArrayList<String[]> readJSON() {
+    protected ArrayList<Student> readJSON() {
         InputStream inputStream = getResources().openRawResource(R.raw.register1117849);
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        ArrayList<String[]> data = new ArrayList<String[]>();
+        ArrayList<Student> data = new ArrayList<Student>();
 
         int ctr;
         try {
@@ -106,15 +106,18 @@ public class MainActivity extends AppCompatActivity {
             JSONArray students= jObject.getJSONArray("students");
 
             Long id;
-            String name;
-            String photo;
+            //String name;
+            //String photo;
             for (int i = 0; i < students.length(); i++) {
                 id = students.getJSONObject(i).getLong("id");
                 Student s = new Student(id);
+                s.setFullName(students.getJSONObject(i).getString("name"));
+                s.setPhoto("p" + String.valueOf(id).substring(4));
 
-                name = students.getJSONObject(i).getString("name");
-                photo =  "p" + String.valueOf(id).substring(4);
-                data.add(new String[] { String.valueOf(id), name, photo });
+                //name = students.getJSONObject(i).getString("name");
+                //photo =  "p" + String.valueOf(id).substring(4);
+                //data.add(new String[] { String.valueOf(id), name, photo });
+                data.add(s);
             }
         } catch (Exception e) {
             e.printStackTrace();

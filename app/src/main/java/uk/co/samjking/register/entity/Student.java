@@ -11,6 +11,16 @@ public class Student {
 
     private String mTutorGroup;
 
+    private String mPhoto;
+
+    public String getPhoto() {
+        return mPhoto;
+    }
+
+    public void setPhoto(String photo) {
+        mPhoto = photo;
+    }
+
     public Student(long id) {
         mId = id;
     }

@@ -14,6 +14,8 @@ import 	android.content.Context;
 
 import java.util.ArrayList;
 
+import uk.co.samjking.register.entity.Student;
+
 /**
  * Created by sam_000 on 24/08/2015.
  */
@@ -21,7 +23,7 @@ public class PhotoPageAdapter extends PagerAdapter {
 
     Context context;
 
-    ArrayList<String[]> data;
+    ArrayList<Student> data;
 
     public PhotoPageAdapter(Context context) {
         this.context = context;
@@ -29,7 +31,7 @@ public class PhotoPageAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        String[] person = data.get(position);
+        Student person = data.get(position);
 
         LinearLayout layout = new LinearLayout(context);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
@@ -43,13 +45,13 @@ public class PhotoPageAdapter extends PagerAdapter {
 
 //260dp
         ImageView imageItem = new ImageView(context);
-        int photo = context.getResources().getIdentifier(person[2], "drawable", context.getPackageName());
+        int photo = context.getResources().getIdentifier(person.getPhoto(), "drawable", context.getPackageName());
         imageItem.setImageResource(photo);
         //imageItem.setBackgroundColor(Color.RED);
         layout.addView(imageItem);
 
         TextView nameItem = new TextView(context);
-        nameItem.setText(person[1]);
+        nameItem.setText(person.getFullName());
         nameItem.setPadding(0,50,0,50);
         layout.addView(nameItem);
         nameItem.setGravity(Gravity.CENTER);
@@ -87,7 +89,7 @@ public class PhotoPageAdapter extends PagerAdapter {
         return data.size();
     }
 
-    public void setData(ArrayList<String[]> data) {
+    public void setData(ArrayList<Student> data) {
         this.data=data;
     }
 
