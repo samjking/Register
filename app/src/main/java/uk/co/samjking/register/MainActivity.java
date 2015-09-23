@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -23,11 +24,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
+import uk.co.samjking.register.entity.Student;
 
-// Head count
 public class MainActivity extends AppCompatActivity {
 
     PhotoContainer mContainer;
+
+    TextView headCount;
+    int presentCount;
+
+    int[] status;
 
     ViewPager pager;
 
@@ -36,11 +42,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        presentCount = 0;
+
         mContainer = (PhotoContainer) findViewById(R.id.photo_container);
 
         pager = mContainer.getViewPager();
 
         ArrayList data = readJSON();
+
+        status = new int[data.size()];
+
+        headCount = (TextView)findViewById(R.id.headCount);
+        headCount.setText(String.valueOf(presentCount)+"/"+String.valueOf(data.size()));
 
         PhotoPageAdapter adapter = new PhotoPageAdapter(this);
         adapter.setData(data);
@@ -84,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Log.v("SJK", byteArrayOutputStream.toString());
+
         try {
             // Parse the data into jsonobject to get original data in form of json.
             JSONObject jObject = new JSONObject(
@@ -92,16 +105,16 @@ public class MainActivity extends AppCompatActivity {
 
             JSONArray students= jObject.getJSONArray("students");
 
-            String id;
+            Long id;
             String name;
             String photo;
             for (int i = 0; i < students.length(); i++) {
-                id = students.getJSONObject(i).getString("id");
+                id = students.getJSONObject(i).getLong("id");
+                Student s = new Student(id);
+
                 name = students.getJSONObject(i).getString("name");
-                photo =  "p" + id.substring(4);
-                Log.v("SJK ID", id);
-                Log.v("SJK Name", name);
-                data.add(new String[] { id, name, photo });
+                photo =  "p" + String.valueOf(id).substring(4);
+                data.add(new String[] { String.valueOf(id), name, photo });
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -132,15 +145,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void markAbsent(View view) {
+        updateHeadcount(pager.getCurrentItem(),0);
         View v = pager.getChildAt(pager.getCurrentItem());
         ImageView i = (ImageView)v.findViewWithTag("img");
         i.setImageResource(R.drawable.ic_close_white_36dp);
-
         moveForward();
-        //Toast.makeText(MainActivity.this,R.string.saved,Toast.LENGTH_SHORT).show();
     }
 
     public void markPresent(View view) {
+        updateHeadcount(pager.getCurrentItem(),1);
         View v = pager.getChildAt(pager.getCurrentItem());
         ImageView i = (ImageView)v.findViewWithTag("img");
         i.setImageResource(R.drawable.ic_check_white_36dp);
@@ -149,6 +162,18 @@ public class MainActivity extends AppCompatActivity {
 
     protected void moveForward() {
 
-        pager.setCurrentItem(pager.getCurrentItem()+1, true);
+        pager.setCurrentItem(pager.getCurrentItem() + 1, true);
+    }
+
+    protected void updateHeadcount(int position, int newStatus) {
+        if (status[position]==0 && newStatus==1) {
+            presentCount ++;
+        } else if (status[position]==1 && newStatus==0) {
+            presentCount --;
+        }
+
+        status[position]=newStatus;
+
+        headCount.setText(String.valueOf(presentCount)+"/"+String.valueOf(status.length));
     }
 }
